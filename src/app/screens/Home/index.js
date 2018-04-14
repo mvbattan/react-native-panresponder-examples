@@ -1,14 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
-import CustomText from '../../components/CustomText';
-
+import DraggableView from './components/DraggableView';
 import styles from './styles';
 
-export default function Home() {
+function Home() {
   return (
-    <View style={styles.container}>
-      <CustomText style={styles.mainButton}>PanResponderExamples</CustomText>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <DraggableView />
+    </ScrollView>
   );
 }
+
+export default Home;
