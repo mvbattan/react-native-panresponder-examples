@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { green } from '../../../constants/colors';
+import { green, background } from '../../../constants/colors';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: background
   },
   mainButton: {
     backgroundColor: green,
@@ -14,3 +15,5 @@ export default StyleSheet.create({
     borderRadius: 3
   }
 });
+
+export default styles;

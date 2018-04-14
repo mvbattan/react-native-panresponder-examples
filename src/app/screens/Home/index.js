@@ -1,14 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import CustomText from '../../components/CustomText';
-
+import CardInfo from './CardInfo';
 import styles from './styles';
 
-export default function Home() {
+function Home() {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.mainButton}>PanResponderExamples</CustomText>
+      <CardInfo />
     </View>
   );
 }
+
+export default Home;

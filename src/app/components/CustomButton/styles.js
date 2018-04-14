@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { transparent, black, green, gray, white } from '../../../constants/colors';
+import { transparent, black, green, gray, white, deny, allow } from '../../../constants/colors';
 
 const iconSize = 20;
 
@@ -14,7 +14,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 8
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    borderRadius: 50
   },
   icon: {
     height: iconSize,
@@ -44,6 +46,18 @@ export default StyleSheet.create({
   },
   borderlessContent: {
     color: gray
+  },
+  red: {
+    backgroundColor: deny
+  },
+  redContent: {
+    color: white
+  },
+  lightBlue: {
+    backgroundColor: allow
+  },
+  lightBlueContent: {
+    color: white
   },
   green: {
     backgroundColor: green
