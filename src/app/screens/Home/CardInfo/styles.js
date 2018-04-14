@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { secondaryBackground, white } from '../../../../constants/colors';
 
-const CARD_SIZE = 300;
+const CARD_SIZE = 325;
 const BORDER_RADIUS = 10;
 
 const styles = StyleSheet.create({
