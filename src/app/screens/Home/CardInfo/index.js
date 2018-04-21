@@ -8,8 +8,16 @@ import styles from './styles';
 class CardInfo extends Component {
   state = {
     scaleValue: new Animated.Value(0.8),
-    swipeValue: new Animated.Value(0)
+    swipeValue: new Animated.Value(0),
+    swipeYValue: new Animated.Value(0)
   };
+
+  releaseCardAnimation = animatedValue =>
+    Animated.spring(animatedValue, {
+      toValue: 0,
+      useNativeEventDriver: true,
+      friction: 3
+    });
 
   panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -18,26 +26,24 @@ class CardInfo extends Component {
     onMoveShouldSetPanResponderCapture: () => true,
 
     onPanResponderGrant: () => true,
-    onPanResponderMove: Animated.event([null, { dx: this.state.swipeValue }]),
+    onPanResponderMove: Animated.event([null, { dx: this.state.swipeValue, dy: this.state.swipeYValue }]),
     onPanResponderTerminationRequest: () => false,
     onPanResponderRelease: () => {
-      Animated.spring(this.state.swipeValue, {
-        toValue: 0,
-        useNativeEventDriver: true,
-        friction: 2.4
-      }).start();
+      Animated.parallel([
+        this.releaseCardAnimation(this.state.swipeValue),
+        this.releaseCardAnimation(this.state.swipeYValue)
+      ]).start();
     },
     onPanResponderTerminate: () => {
-      Animated.spring(this.state.swipeValue, {
-        toValue: 0,
-        useNativeEventDriver: true,
-        friction: 2.4
-      }).start();
+      Animated.parallel([
+        this.releaseCardAnimation(this.state.swipeValue),
+        this.releaseCardAnimation(this.state.swipeYValue)
+      ]).start();
     }
   });
 
   handleButtonPress = () => {
-    Animated.spring(this.state.scaleValue, { toValue: 1, useNativeEventDriver: true, friction: 1.6 }).start(
+    Animated.spring(this.state.scaleValue, { toValue: 1, useNativeEventDriver: true, friction: 2 }).start(
       () => this.state.scaleValue.setValue(0.8)
     );
   };
@@ -46,7 +52,17 @@ class CardInfo extends Component {
     return (
       <Animated.View
         style={{
-          transform: [{ scale: this.state.scaleValue }, { translateX: this.state.swipeValue }]
+          transform: [
+            { scale: this.state.scaleValue },
+            {
+              rotateZ: this.state.swipeValue.interpolate({
+                inputRange: [0, 1000],
+                outputRange: ['0deg', '90deg']
+              })
+            },
+            { translateX: this.state.swipeValue },
+            { translateY: this.state.swipeYValue }
+          ]
         }}
         {...this.panResponder.panHandlers}
       >
