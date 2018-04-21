@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Animated, PanResponder } from 'react-native';
 
 import CustomButton from '../../../components/CustomButton';
@@ -7,25 +8,26 @@ import styles from './styles';
 
 class CardInfo extends Component {
   state = {
-    scaleValue: new Animated.Value(0.8),
+    scaleValue: new Animated.Value(this.props.scale),
     swipeValue: new Animated.Value(0),
-    swipeYValue: new Animated.Value(0)
+    swipeYValue: new Animated.Value(0),
+    initialValue: new Animated.Value(this.props.y)
   };
 
   releaseCardAnimation = animatedValue =>
     Animated.spring(animatedValue, {
       toValue: 0,
       useNativeEventDriver: true,
-      friction: 3
+      friction: 4
     });
 
   panResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
+    onStartShouldSetPanResponder: () => this.props.isActive,
     onStartShouldSetPanResponderCapture: () => false,
-    onMoveShouldSetPanResponder: () => true,
-    onMoveShouldSetPanResponderCapture: () => true,
+    onMoveShouldSetPanResponder: () => this.props.isActive,
+    onMoveShouldSetPanResponderCapture: () => this.props.isActive,
 
-    onPanResponderGrant: () => true,
+    onPanResponderGrant: () => this.props.isActive,
     onPanResponderMove: Animated.event([null, { dx: this.state.swipeValue, dy: this.state.swipeYValue }]),
     onPanResponderTerminationRequest: () => false,
     onPanResponderRelease: () => {
@@ -61,7 +63,7 @@ class CardInfo extends Component {
               })
             },
             { translateX: this.state.swipeValue },
-            { translateY: this.state.swipeYValue }
+            { translateY: Animated.add(this.state.swipeYValue, this.state.initialValue) }
           ]
         }}
         {...this.panResponder.panHandlers}
@@ -75,4 +77,11 @@ class CardInfo extends Component {
     );
   }
 }
+
+CardInfo.propTypes = {
+  y: PropTypes.number.isRequired,
+  scale: PropTypes.number.isRequired,
+  isActive: PropTypes.bool
+};
+
 export default CardInfo;
