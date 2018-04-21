@@ -20,15 +20,21 @@ class CardInfo extends Component {
     onPanResponderGrant: () => true,
     onPanResponderMove: Animated.event([null, { dx: this.state.swipeValue }]),
     onPanResponderTerminationRequest: () => false,
-    onPanResponderRelease: (evt, gestureState) => {
-      // The user has released all touches while this view is the
-      // responder. This typically means a gesture has succeeded
+    onPanResponderRelease: () => {
+      Animated.spring(this.state.swipeValue, {
+        toValue: 0,
+        useNativeEventDriver: true,
+        friction: 2.4
+      }).start();
     },
-    onPanResponderTerminate: (evt, gestureState) => {
-      // Another component has become the responder, so this gesture
-      // should be cancelled
+    onPanResponderTerminate: () => {
+      Animated.spring(this.state.swipeValue, {
+        toValue: 0,
+        useNativeEventDriver: true,
+        friction: 2.4
+      }).start();
     }
-  })
+  });
 
   handleButtonPress = () => {
     Animated.spring(this.state.scaleValue, { toValue: 1, useNativeEventDriver: true, friction: 1.6 }).start(
