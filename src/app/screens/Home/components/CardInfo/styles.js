@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: BORDER_RADIUS,
     borderTopRightRadius: BORDER_RADIUS,
     position: 'absolute',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    justifyContent: 'center'
   },
   buttonContainer: {
     flexDirection: 'row',

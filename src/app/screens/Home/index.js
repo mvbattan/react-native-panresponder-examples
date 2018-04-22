@@ -10,10 +10,10 @@ import CardList from './components/CardList';
 import styles from './styles';
 
 const cards = [
-  { id: 0, image: forest },
-  { id: 1, image: concert },
-  { id: 2, image: aurora },
-  { id: 3, image: rnBsas }
+  { id: 0, image: forest, title: 'Gump event' },
+  { id: 1, image: concert, title: 'Arch Enemy concert' },
+  { id: 2, image: aurora, title: 'Aurora Borealis' },
+  { id: 3, image: rnBsas, title: 'React Native' }
 ];
 
 function Home() {
