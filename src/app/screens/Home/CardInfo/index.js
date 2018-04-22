@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated, PanResponder } from 'react-native';
+import { View, Animated, PanResponder, Dimensions } from 'react-native';
 
 import CustomButton from '../../../components/CustomButton';
 
 import styles from './styles';
+
+const { width } = Dimensions.get('window');
 
 class CardInfo extends Component {
   state = {
@@ -12,6 +14,16 @@ class CardInfo extends Component {
     swipeValue: new Animated.Value(0),
     swipeYValue: new Animated.Value(0),
     initialValue: new Animated.Value(this.props.y)
+  };
+
+  onHitThreshold = isLeft => {
+    Animated.parallel([
+      Animated.timing(this.state.swipeValue, {
+        toValue: 500 * (isLeft ? -1 : 1),
+        useNativeEventDriver: true
+      }),
+      Animated.timing(this.state.swipeYValue, { toValue: -500, useNativeEventDriver: true, duration: 250 })
+    ]).start();
   };
 
   releaseCardAnimation = animatedValue =>
@@ -31,10 +43,14 @@ class CardInfo extends Component {
     onPanResponderMove: Animated.event([null, { dx: this.state.swipeValue, dy: this.state.swipeYValue }]),
     onPanResponderTerminationRequest: () => false,
     onPanResponderRelease: () => {
-      Animated.parallel([
-        this.releaseCardAnimation(this.state.swipeValue),
-        this.releaseCardAnimation(this.state.swipeYValue)
-      ]).start();
+      if (this.state.swipeValue._value < -width / 4 || this.state.swipeValue._value > width / 4) {
+        this.onHitThreshold(this.state.swipeValue._value < -width / 4);
+      } else {
+        Animated.parallel([
+          this.releaseCardAnimation(this.state.swipeValue),
+          this.releaseCardAnimation(this.state.swipeYValue)
+        ]).start();
+      }
     },
     onPanResponderTerminate: () => {
       Animated.parallel([
