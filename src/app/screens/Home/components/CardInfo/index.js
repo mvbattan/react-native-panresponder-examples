@@ -23,7 +23,7 @@ class CardInfo extends Component {
         useNativeEventDriver: true
       }),
       Animated.timing(this.state.swipeYValue, { toValue: -500, useNativeEventDriver: true, duration: 300 })
-    ]).start();
+    ]).start(this.props.onDeleteCard);
   };
 
   releaseCardAnimation = animatedValue =>
@@ -97,7 +97,8 @@ class CardInfo extends Component {
 CardInfo.propTypes = {
   y: PropTypes.number.isRequired,
   scale: PropTypes.number.isRequired,
-  isActive: PropTypes.bool
+  isActive: PropTypes.bool,
+  onDeleteCard: PropTypes.func
 };
 
 export default CardInfo;

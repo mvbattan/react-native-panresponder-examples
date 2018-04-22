@@ -12,9 +12,17 @@ class CardList extends Component {
 
   state = { cards: [] };
 
+  handleDeleteCard = () => {
+    const newCards = this.state.cards.slice(0, this.state.cards.length - 1);
+    if (!newCards.length) return this.setState(() => ({ cards: [] }));
+
+    newCards[newCards.length - 1].isActive = true;
+    return this.setState(() => ({ cards: newCards }));
+  };
+
   render() {
     const { cards } = this.state;
-    return cards.map(card => <CardInfo key={card.id} {...card} />);
+    return cards.map(card => <CardInfo key={card.id} {...card} onDeleteCard={this.handleDeleteCard} />);
   }
 }
 
