@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Animated, PanResponder, Dimensions } from 'react-native';
 
-import CustomButton from '../../../components/CustomButton';
+import CustomButton from '../../../../components/CustomButton';
 
 import styles from './styles';
 
@@ -22,7 +22,7 @@ class CardInfo extends Component {
         toValue: 500 * (isLeft ? -1 : 1),
         useNativeEventDriver: true
       }),
-      Animated.timing(this.state.swipeYValue, { toValue: -500, useNativeEventDriver: true, duration: 250 })
+      Animated.timing(this.state.swipeYValue, { toValue: -500, useNativeEventDriver: true, duration: 300 })
     ]).start();
   };
 
