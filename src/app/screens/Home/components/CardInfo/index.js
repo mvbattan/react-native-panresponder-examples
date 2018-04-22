@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated, PanResponder, Dimensions } from 'react-native';
+import { View, Animated, PanResponder, Dimensions, Image } from 'react-native';
 
 import CustomButton from '../../../../components/CustomButton';
 
@@ -78,7 +78,9 @@ class CardInfo extends Component {
         }}
         {...this.panResponder.panHandlers}
       >
-        <View style={styles.container} />
+        <View style={styles.container}>
+          <Image source={this.props.image} style={styles.container} resizeMode="cover" />
+        </View>
         <View style={styles.buttonContainer}>
           <CustomButton onPress={this.handleButtonPress} bold red title="DON'T" />
           <CustomButton onPress={this.handleButtonPress} bold lightBlue title="I'M IN" />
@@ -96,7 +98,8 @@ CardInfo.propTypes = {
     _value: PropTypes.number
   }),
   isActive: PropTypes.bool,
-  onDeleteCard: PropTypes.func
+  onDeleteCard: PropTypes.func,
+  image: PropTypes.number
 };
 
 export default CardInfo;

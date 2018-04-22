@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     width: CARD_SIZE,
     borderTopLeftRadius: BORDER_RADIUS,
     borderTopRightRadius: BORDER_RADIUS,
-    position: 'absolute'
+    position: 'absolute',
+    overflow: 'hidden'
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -25,6 +26,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: BORDER_RADIUS,
     position: 'absolute',
     top: CARD_SIZE
+  },
+  image: {
+    height: CARD_SIZE,
+    width: CARD_SIZE
   }
 });
 
