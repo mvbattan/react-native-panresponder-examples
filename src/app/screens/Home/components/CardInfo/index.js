@@ -10,10 +10,8 @@ const { width } = Dimensions.get('window');
 
 class CardInfo extends Component {
   state = {
-    scaleValue: new Animated.Value(this.props.scale),
     swipeValue: new Animated.Value(0),
-    swipeYValue: new Animated.Value(0),
-    initialValue: new Animated.Value(this.props.y)
+    swipeYValue: new Animated.Value(0)
   };
 
   onHitThreshold = isLeft => {
@@ -61,8 +59,8 @@ class CardInfo extends Component {
   });
 
   handleButtonPress = () => {
-    Animated.spring(this.state.scaleValue, { toValue: 1, useNativeEventDriver: true, friction: 2 }).start(
-      () => this.state.scaleValue.setValue(0.8)
+    Animated.spring(this.props.scaleValue, { toValue: 1, useNativeEventDriver: true, friction: 2 }).start(
+      () => this.props.scaleValue.setValue(0.8)
     );
   };
 
@@ -71,7 +69,7 @@ class CardInfo extends Component {
       <Animated.View
         style={{
           transform: [
-            { scale: this.state.scaleValue },
+            { scale: this.props.scaleValue },
             {
               rotateZ: this.state.swipeValue.interpolate({
                 inputRange: [0, 1000],
@@ -79,7 +77,7 @@ class CardInfo extends Component {
               })
             },
             { translateX: this.state.swipeValue },
-            { translateY: Animated.add(this.state.swipeYValue, this.state.initialValue) }
+            { translateY: Animated.add(this.state.swipeYValue, this.props.initialValue) }
           ]
         }}
         {...this.panResponder.panHandlers}
@@ -95,8 +93,8 @@ class CardInfo extends Component {
 }
 
 CardInfo.propTypes = {
-  y: PropTypes.number.isRequired,
-  scale: PropTypes.number.isRequired,
+  initialValue: PropTypes.object,
+  scaleValue: PropTypes.object,
   isActive: PropTypes.bool,
   onDeleteCard: PropTypes.func
 };

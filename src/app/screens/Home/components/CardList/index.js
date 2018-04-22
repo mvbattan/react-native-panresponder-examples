@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 
 import CardInfo from '../CardInfo';
 
 class CardList extends Component {
   static getDerivedStateFromProps(props) {
-    const newCards = props.cards.map((card, i) => ({ ...card, scale: 0.7 + i * 0.1, y: i * 25 }));
+    const newCards = props.cards.map((card, i) => ({
+      ...card,
+      scaleValue: new Animated.Value(0.7 + i * 0.1),
+      initialValue: new Animated.Value(i * 25)
+    }));
     newCards[newCards.length - 1].isActive = true;
     return { cards: newCards };
   }
@@ -17,7 +22,27 @@ class CardList extends Component {
     if (!newCards.length) return this.setState(() => ({ cards: [] }));
 
     newCards[newCards.length - 1].isActive = true;
-    return this.setState(() => ({ cards: newCards }));
+    return this.setState(
+      () => ({ cards: newCards }),
+      () =>
+        Animated.parallel(
+          this.state.cards
+            .map(card =>
+              Animated.timing(card.initialValue, {
+                toValue: card.initialValue._value + 25,
+                useNativeEventDriver: true
+              })
+            )
+            .concat(
+              this.state.cards.map(card =>
+                Animated.spring(card.scaleValue, {
+                  toValue: card.scaleValue._value + 0.1,
+                  useNativeEventDriver: true
+                })
+              )
+            )
+        ).start()
+    );
   };
 
   render() {
