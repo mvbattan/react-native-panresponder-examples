@@ -58,11 +58,7 @@ class CardInfo extends Component {
     }
   });
 
-  handleButtonPress = () => {
-    Animated.spring(this.props.scaleValue, { toValue: 1, useNativeEventDriver: true, friction: 2 }).start(
-      () => this.props.scaleValue.setValue(0.8)
-    );
-  };
+  handleButtonPress = () => {};
 
   render() {
     return (
@@ -93,8 +89,12 @@ class CardInfo extends Component {
 }
 
 CardInfo.propTypes = {
-  initialValue: PropTypes.object,
-  scaleValue: PropTypes.object,
+  initialValue: PropTypes.shape({
+    _value: PropTypes.number
+  }),
+  scaleValue: PropTypes.shape({
+    _value: PropTypes.number
+  }),
   isActive: PropTypes.bool,
   onDeleteCard: PropTypes.func
 };
