@@ -7,14 +7,13 @@ const BORDER_RADIUS = 10;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: white,
     height: CARD_SIZE,
     width: CARD_SIZE,
     borderTopLeftRadius: BORDER_RADIUS,
     borderTopRightRadius: BORDER_RADIUS,
-    position: 'absolute',
     overflow: 'hidden',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: white
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -24,13 +23,12 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: secondaryBackground,
     borderBottomLeftRadius: BORDER_RADIUS,
-    borderBottomRightRadius: BORDER_RADIUS,
-    position: 'absolute',
-    top: CARD_SIZE
+    borderBottomRightRadius: BORDER_RADIUS
   },
   image: {
     height: CARD_SIZE,
-    width: CARD_SIZE
+    width: CARD_SIZE,
+    position: 'absolute'
   }
 });
 

@@ -42,6 +42,14 @@ class CardInfo extends Component {
     onPanResponderMove: Animated.event([null, { dx: this.state.swipeValue, dy: this.state.swipeYValue }]),
     onPanResponderTerminationRequest: () => false,
     onPanResponderRelease: () => {
+      if (this.state.swipeValue._value === 0 && this.state.swipeYValue._value === 0) {
+        Animated.parallel([
+          Animated.timing(this.props.initialValue, { toValue: 0, useNativeEventDriver: true }),
+          Animated.timing(this.props.scaleValue, { toValue: 1.2, useNativeEventDriver: true })
+        ]).start();
+        return;
+      }
+
       if (this.state.swipeValue._value < -width / 4 || this.state.swipeValue._value > width / 4) {
         this.onHitThreshold(this.state.swipeValue._value < -width / 4);
       } else {
@@ -65,6 +73,9 @@ class CardInfo extends Component {
     return (
       <Animated.View
         style={{
+          position: 'absolute',
+          width,
+          alignItems: 'center',
           transform: [
             { scale: this.props.scaleValue },
             {
@@ -80,7 +91,7 @@ class CardInfo extends Component {
         {...this.panResponder.panHandlers}
       >
         <View style={styles.container}>
-          <Image source={this.props.image} style={styles.container} resizeMode="cover" />
+          <Image source={this.props.image} style={styles.image} resizeMode="cover" />
           <CustomText white bold xbig center>
             {this.props.title}
           </CustomText>
@@ -101,6 +112,7 @@ CardInfo.propTypes = {
   scaleValue: PropTypes.shape({
     _value: PropTypes.number
   }),
+  title: PropTypes.string,
   isActive: PropTypes.bool,
   onDeleteCard: PropTypes.func,
   image: PropTypes.number
