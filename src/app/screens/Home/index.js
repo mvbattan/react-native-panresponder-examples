@@ -1,14 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import CustomText from '../../components/CustomText';
-
+import VideoTimeline from './components/VideoTimeline';
 import styles from './styles';
 
-export default function Home() {
+function Home() {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.mainButton}>PanResponderExamples</CustomText>
+      <VideoTimeline
+        link="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        timeline={[]}
+      />
     </View>
   );
 }
+
+export default Home;

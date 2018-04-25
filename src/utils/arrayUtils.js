@@ -34,3 +34,6 @@ export function arrayToObject(arr) {
   arr.forEach((elem, i) => (obj[i] = elem));
   return obj;
 }
+
+// eslint-disable-next-line prefer-spread
+export const range = n => Array.apply(null, { length: n }).map(Number.call, Number);
